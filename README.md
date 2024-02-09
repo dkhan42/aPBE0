@@ -12,7 +12,7 @@ To obtain aPBE0 atomization energy for a molecule (in Hartree) with the predicte
 
 ```
 from get_exchange import get_atomization
-energy = get_atomization(elements, coords, exchange, basis)
+energy = get_atomization(elements, coords, opt_exchange, basis)
 ```
 
 where `elements` is the array (strings) of chemical symbols in the molecule and `exchange` is the predicted exact exchange fraction 
