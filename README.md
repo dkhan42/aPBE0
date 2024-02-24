@@ -7,7 +7,7 @@ Python libraries required :
 * Joblib
 * cMBDF (https://github.com/dkhan42/cMBDF)
 * qml2 (https://github.com/dkhan42/qml2/tree/develop)
-* Pyscf (only for the atomization energy function)
+* Pyscf (only for the `get_atomization` function)
 
 Usage :
 
