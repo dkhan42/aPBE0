@@ -1,7 +1,7 @@
 # aPBE0
 CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file.
 
-Chemical symbols, coordinates, atomization energies (in Hartree) for each molecule are available in the `elements`, `coordinates`, `energies` arrays respectively in the same order.
+Chemical symbols, coordinates, CCSD total energies, CCSD(T) total energies, CCSD(T) atomization energies (all in Hartree) for each molecule are available in the `elements`, `coordinates`, `eccsd`, `eccsdt`, `hccsdt` arrays respectively in the same order.
 
 ML model for predicting the optimal exact exachange ratio to be used in the PBE0 functional
 
