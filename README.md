@@ -10,7 +10,8 @@ Python libraries required :
 * Pyscf (only for the `get_atomization` function)
 
 CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file.
-chemical symbols, coordinates, atomization energies (in Hartree) for each molecule are available in the `elements`, `coordinates`, `energies` arrays respectively in the same order.
+
+Chemical symbols, coordinates, atomization energies (in Hartree) for each molecule are available in the `elements`, `coordinates`, `energies` arrays respectively in the same order.
 
 Usage :
 
