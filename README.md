@@ -1,6 +1,9 @@
 # aPBE0
-ML model for predicting the optimal exact exachange ratio to be used in the PBE0 functional
+CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file.
 
+Chemical symbols, coordinates, atomization energies (in Hartree) for each molecule are available in the `elements`, `coordinates`, `energies` arrays respectively in the same order.
+
+ML model for predicting the optimal exact exachange ratio to be used in the PBE0 functional
 Python libraries required : 
 * Numpy
 * Numba
@@ -9,9 +12,6 @@ Python libraries required :
 * qml2 (https://github.com/dkhan42/qml2/tree/develop)
 * Pyscf (only for the `get_atomization` function)
 
-CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file.
-
-Chemical symbols, coordinates, atomization energies (in Hartree) for each molecule are available in the `elements`, `coordinates`, `energies` arrays respectively in the same order.
 
 Usage :
 
