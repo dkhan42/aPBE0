@@ -9,6 +9,7 @@ Python libraries required :
 * Numpy
 * Numba
 * Joblib
+* Ase (if supplying xyz files)
 * cMBDF (https://github.com/dkhan42/cMBDF)
 * qml2 (https://github.com/dkhan42/qml2/tree/develop)
 * Pyscf (only for the `get_atomization` function)
@@ -19,6 +20,7 @@ Usage :
 ```
 from get_exchange import get_predictions
 opt_exchange = get_predictions(charges, coords)
+opt_exchange = get_predictions(xyz = 'mol.xyz') #if supplying xyz file instead
 ```
 where `charges` and `coords` are arrays containing atomic numbers and atomic coordinates for each molecule
 
