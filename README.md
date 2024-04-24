@@ -1,10 +1,11 @@
 # aPBE0
-CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file.
-\\
-CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file.
+CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file. Chemical symbols, coordinates, CCSD total energies, CCSD(T) total energies, CCSD(T) atomization energies (all in Hartree) for each molecule are available in the `elements`, `coordinates`, `eccsd`, `eccsdt`, `hccsdt` arrays respectively in the same order.
 
+Spin gap test set used in figure 2 from the QMspin dataset is available in `qmspin_test_set.npz` along with MRCISD+Q spin gap energies.
 
-Chemical symbols, coordinates, CCSD total energies, CCSD(T) total energies, CCSD(T) atomization energies (all in Hartree) for each molecule are available in the `elements`, `coordinates`, `eccsd`, `eccsdt`, `hccsdt` arrays respectively in the same order.
+HOMO-LUMO gap test set used in figure 3 from the QM7b dataset is available in `qm7b_test_set.npz` along with GW HOMO, LUMO and HOMO-LUMO gap eigenvalues.
+
+All energies are reported in Hartrees.
 
 ML model for predicting the optimal exact exachange ratio to be used in the PBE0 functional
 
