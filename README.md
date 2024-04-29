@@ -36,3 +36,9 @@ energy = get_atomization(elements, coords, opt_exchange, basis)
 ```
 
 where `elements` is the array (strings) of chemical symbols in the molecule and `exchange` is the predicted exact exchange fraction 
+
+# References
+Please consider citing the following work :
+
+Khan, D., Price, A. J. A., Ach, M. L., Trottier, O., & von Lilienfeld, O. A. (2024). Adaptive hybrid density functionals. arXiv preprint arXiv:2402.14793.
+
