@@ -1,5 +1,6 @@
 # aPBE0 
 # `.xyz` files for all molecules from the QM5, QM9, QM7b, W4-17 datasets used for training and testing in the paper along with text files containing relevant aopt, apred, reference energies etc. are available in separate folders within the `train_test_data.tar.xz` file. Each folder for the dataset contains a `readme.txt` file explaining the reported data.
+# Text files containing predicted a value, aPBE0 energy, PBE0 energy, and mean absolute error (MAE) across all subsets from GMTKN55 reported in figure 3 are available in the `gmtkn55_data.tar.xz` file along with a 'readme.txt` description.
 
 CCSD(T) training data for the 1169 amons used to generate training labels is available in the `cc_train_data.npz` file. Chemical symbols, coordinates, CCSD total energies, CCSD(T) total energies, CCSD(T) atomization energies (all in Hartree) for each molecule are available in the `elements`, `coordinates`, `eccsd`, `eccsdt`, `hccsdt` arrays respectively in the same order.
 
