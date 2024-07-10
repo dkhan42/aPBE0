@@ -3,15 +3,14 @@ from qml.kernels import get_local_kernel
 from cMBDF import generate_mbdf
 from ase.io import read
 
-def get_predictions(charges=None,coords=None,xyz = False):
-    if xyz!=False:
-        Atoms = read(xyz)
-        charges = Atoms.get_atomic_numbers
-        coords = Atoms.get_positions
+def get_predictions(xyz):
+    Atoms = read(xyz)
+    charges = Atoms.get_atomic_numbers()
+    coords = Atoms.get_positions()
     data = np.load('trained_model.npz', allow_pickle=True)
     xtrain, qtrain, alpha = data['xtrain'], data['qtrain'], data['alpha']
     rep = generate_mbdf(np.array([charges]),np.array([coords]),n_atm=2.0,pad=50)
-    Ne = np.array([np.sum(arr) for arr in charges])
+    Ne = np.sum(charges)
     k = get_local_kernel(xtrain,rep,qtrain,charges,1638.4).T
     return (np.dot(k.T,alpha)/Ne)/100
 
