@@ -263,57 +263,57 @@ def generate_data(size,charges,coods,rconvs,aconvs,cutoff_r=12.0,n_atm = 2.0):
                         twob[i][j][id2] = conv
                         twob[j][i][id2] = conv
                         id2+=1
+                if size>2:
+                    for k in range(j+1, size):
+                        rik=atom-coods[k]
+                        rik_norm=np.linalg.norm(rik)
 
-                for k in range(j+1, size):
-                    rik=atom-coods[k]
-                    rik_norm=np.linalg.norm(rik)
+                        if rik_norm!=0 and rik_norm<cutoff_r:
+                            z3=charges[k]
 
-                    if rik_norm!=0 and rik_norm<cutoff_r:
-                        z3=charges[k]
-                        
-                        rkj=coods[k]-coods[j]
-                        
-                        rkj_norm=np.linalg.norm(rkj)
+                            rkj=coods[k]-coods[j]
 
-                        cos1 = np.minimum(1.0,np.maximum(np.dot(rij,rik)/(rij_norm*rik_norm),-1.0))
-                        cos2 = np.minimum(1.0,np.maximum(np.dot(rij,rkj)/(rij_norm*rkj_norm),-1.0))
-                        cos3 = np.minimum(1.0,np.maximum(np.dot(-rkj,rik)/(rkj_norm*rik_norm),-1.0))
-                        ang1 = np.arccos(cos1)
-                        ang2 = np.arccos(cos2)
-                        ang3 = np.arccos(cos3)
-                        
-                        ind1 = int(ang1/astep)
-                        ind2 = int(ang2/astep)
-                        ind3 = int(ang3/astep)
+                            rkj_norm=np.linalg.norm(rkj)
 
-                        atm = (rij_norm*rik_norm*rkj_norm)**n_atm
-                        
-                        charge = np.cbrt(z*z2*z3)
-                        
-                        pref = charge
+                            cos1 = np.minimum(1.0,np.maximum(np.dot(rij,rik)/(rij_norm*rik_norm),-1.0))
+                            cos2 = np.minimum(1.0,np.maximum(np.dot(rij,rkj)/(rij_norm*rkj_norm),-1.0))
+                            cos3 = np.minimum(1.0,np.maximum(np.dot(-rkj,rik)/(rkj_norm*rik_norm),-1.0))
+                            ang1 = np.arccos(cos1)
+                            ang2 = np.arccos(cos2)
+                            ang3 = np.arccos(cos3)
 
-                        id2=0
-                        for i1 in range(m2):
-                            for i2 in range(n2):
-                                if i2==0:
-                                    conv1 = (pref*aconvs[i1][i2][ind1]*cos2*cos3)/atm
-                                    conv2 = (pref*aconvs[i1][i2][ind2]*cos1*cos3)/atm
-                                    conv3 = (pref*aconvs[i1][i2][ind3]*cos2*cos1)/atm
-                                else:
-                                    conv1 = (pref*aconvs[i1][i2][ind1])/atm
-                                    conv2 = (pref*aconvs[i1][i2][ind2])/atm
-                                    conv3 = (pref*aconvs[i1][i2][ind3])/atm
-                                
-                                threeb[i][j][k][id2] = conv1
-                                threeb[i][k][j][id2] = conv1
+                            ind1 = int(ang1/astep)
+                            ind2 = int(ang2/astep)
+                            ind3 = int(ang3/astep)
 
-                                threeb[j][i][k][id2] = conv2
-                                threeb[j][k][i][id2] = conv2
+                            atm = (rij_norm*rik_norm*rkj_norm)**n_atm
 
-                                threeb[k][j][i][id2] = conv3
-                                threeb[k][i][j][id2] = conv3
+                            charge = np.cbrt(z*z2*z3)
 
-                                id2+=1
+                            pref = charge
+
+                            id2=0
+                            for i1 in range(m2):
+                                for i2 in range(n2):
+                                    if i2==0:
+                                        conv1 = (pref*aconvs[i1][i2][ind1]*cos2*cos3)/atm
+                                        conv2 = (pref*aconvs[i1][i2][ind2]*cos1*cos3)/atm
+                                        conv3 = (pref*aconvs[i1][i2][ind3]*cos2*cos1)/atm
+                                    else:
+                                        conv1 = (pref*aconvs[i1][i2][ind1])/atm
+                                        conv2 = (pref*aconvs[i1][i2][ind2])/atm
+                                        conv3 = (pref*aconvs[i1][i2][ind3])/atm
+
+                                    threeb[i][j][k][id2] = conv1
+                                    threeb[i][k][j][id2] = conv1
+
+                                    threeb[j][i][k][id2] = conv2
+                                    threeb[j][k][i][id2] = conv2
+
+                                    threeb[k][j][i][id2] = conv3
+                                    threeb[k][i][j][id2] = conv3
+
+                                    id2+=1
 
     return twob,threeb 
 
@@ -335,7 +335,7 @@ def get_cmbdf(charges, coods, convs, pad=None, rcut=10.0,n_atm = 1.0, gradients=
     mat=np.zeros((pad,desc_size))
     #alc = alc_scaling(charges)
 
-    assert size > 2, "No implementation for mono and diatomics yet"
+    assert size > 1, "No implementation for mono-atomics yet"
 
     if gradients:
         dmat = np.zeros((pad,desc_size,pad,3))
@@ -394,7 +394,7 @@ def get_cmbdf_global(charges, coods, asize,rep_size,keys, convs, rcut=10.0,n_atm
 
     return mat.ravel(order='F')
 
-def get_convolutions(rstep=0.0008,rcut=10.0,alpha_list=[1.5,5.0],n_list=[3.0,5.0],order=4,a1=2.0,a2=2.0,astep=0.0002,nAs=4,gradients=True):
+def get_convolutions(rstep=0.0008,rcut=10.0,alpha_list=[1.5,5.0],n_list=[3.0,5.0],order=4,a1=2.0,a2=2.0,astep=0.0002,nAs=4,gradients=False):
     """
     returns cMBDF convolutions evaluated via Fast Fourier Transforms
     """
@@ -476,7 +476,7 @@ def get_convolutions(rstep=0.0008,rcut=10.0,alpha_list=[1.5,5.0],n_list=[3.0,5.0
 
 from joblib import Parallel, delayed
 
-def generate_mbdf(nuclear_charges,coords,alpha_list=[1.5,5.0],n_list=[3.0,5.0],gradients=False,local=True,n_jobs=-1,a1=2.0,pad=None,rstep=0.0008,rcut=10.0,astep=0.0002,nAs=4,order=4,progress_bar=False,a2=2.0,n_atm = 2.0):
+def generate_mbdf(nuclear_charges,coords,convs,alpha_list=[1.5,5.0],n_list=[3.0,5.0],gradients=False,local=True,n_jobs=-1,a1=2.0,pad=None,rstep=0.0008,rcut=10.0,astep=0.0002,nAs=4,order=4,progress_bar=False,a2=2.0,n_atm = 2.0):
     assert nuclear_charges.shape[0] == coords.shape[0], "charges and coordinates array length mis-match"
     
     lengths, charges = [], []
@@ -494,7 +494,7 @@ def generate_mbdf(nuclear_charges,coords,alpha_list=[1.5,5.0],n_list=[3.0,5.0],g
     if pad==None:
         pad = max(lengths)
 
-    convs = get_convolutions(rstep,rcut,alpha_list,n_list,order,a1,a2,astep,nAs,gradients)
+    #convs = get_convolutions(rstep,rcut,alpha_list,n_list,order,a1,a2,astep,nAs,gradients)
 
     if local:
         if gradients:
@@ -536,6 +536,7 @@ def generate_mbdf(nuclear_charges,coords,alpha_list=[1.5,5.0],n_list=[3.0,5.0],g
             reps = Parallel(n_jobs=n_jobs)(delayed(get_cmbdf_global)(charge, cood,asize,rep_size,keys, convs, rcut,n_atm) for charge,cood in tqdm(list(zip(charges,coords))))
 
         else:
-            reps = Parallel(n_jobs=n_jobs)(delayed(get_cmbdf_global)(charge, cood, asize,rep_size,keys, convs, pad, rcut,n_atm) for charge,cood in list(zip(charges,coords)))
+            reps = Parallel(n_jobs=n_jobs)(delayed(get_cmbdf_global)(charge, cood, asize,rep_size,keys, convs,rcut,n_atm) for charge,cood in list(zip(charges,coords)))
         
         return np.asarray(reps)  
+
