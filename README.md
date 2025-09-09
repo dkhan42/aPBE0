@@ -25,8 +25,4 @@ Python libraries required :
 
 See `example.ipynb` for usage examples
 
-# References
-Please consider citing the following work :
-
-Khan, D., Price, A. J. A., Ach, M. L., Trottier, O., & von Lilienfeld, O. A. (2024). Adaptive hybrid density functionals. arXiv preprint arXiv:2402.14793.
 
